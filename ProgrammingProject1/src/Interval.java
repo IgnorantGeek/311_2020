@@ -26,4 +26,15 @@ public class Interval
     {
         return low;
     }
+
+    /**
+     * Check if the current interval overlaps with i
+     * @param i
+     * @return true if they overlap, false otherwise
+     */
+    public boolean Overlap(Interval i)
+    {
+        if (this.low <= i.high && i.low <= this.high) return true;
+        return false;
+    }
 }

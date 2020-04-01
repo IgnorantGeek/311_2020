@@ -53,15 +53,15 @@ public class IntervalTreap
     {
 
     }
-
-
-    // EXTRA CREDIT METHODS (NOT REQUIRED)
     
     // TODO
     public Node intervalSearch(Interval i)
     {
         return null;
     }
+
+
+    // EXTRA CREDIT METHODS (NOT REQUIRED)
 
     // TODO
     public Node intervalSearchExactly(Interval i)
@@ -73,5 +73,15 @@ public class IntervalTreap
     public List<Interval> overlappingIntervals(Interval i)
     {
         return null;
+    }
+
+    private void LeftRotate(Node z)
+    {
+        // perform a left rotate on the specified node
+    }
+
+    private void RightRotate(Node z)
+    {
+        // perform a right rotate on the specified node
     }
 }
