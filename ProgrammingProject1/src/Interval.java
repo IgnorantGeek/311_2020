@@ -1,8 +1,14 @@
+/** Interval Class
+ * 
+ * @author Nick Heisler and Tom Frye
+ */
+
 public class Interval
 {
     public int low;
     public int high;
 
+    /*-----Constructors---------*/
     public Interval() { }
 
     public Interval(int low, int high)
@@ -11,6 +17,7 @@ public class Interval
         this.high = high;
     }
 
+    /*----Class Methods----------*/
     /**
      * @return the high
      */
@@ -30,7 +37,7 @@ public class Interval
     /**
      * Check if the current interval overlaps with i
      * @param i
-     * @return true if they overlap, false otherwise
+     * @return true if the intervals overlap, false otherwise
      */
     public boolean Overlap(Interval i)
     {

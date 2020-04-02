@@ -1,3 +1,8 @@
+/** Treap Node Class
+ * 
+ * @author Nick Heisler and Tom Frye
+ */
+
 public class Node
 {
     public Interval interv;

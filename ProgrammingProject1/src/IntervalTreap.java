@@ -1,5 +1,9 @@
 import java.util.List;
 
+/** Interval Treap Class
+ * 
+ * @author Nick Heisler and Tom Frye
+ */
 public class IntervalTreap
 {
     public Node root;
