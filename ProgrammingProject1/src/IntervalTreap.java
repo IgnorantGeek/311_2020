@@ -12,15 +12,24 @@ public class IntervalTreap
     public int size;
     public int height;
     
-    // Default constructor
+    /*-----Constructors---------*/
     public IntervalTreap()
     {
         // Initialize the root?
         root = new Node();
         size = 1;
-        height = 1;
+        height = 0;
     }
 
+    public IntervalTreap(Interval i)
+    {
+        root = new Node(i);
+        size = 1;
+        height = 0;
+    }
+
+
+    /*----Class Methods----------*/
     /**
      * @return the height
      */
@@ -49,7 +58,9 @@ public class IntervalTreap
     // TODO
     public void intervalInsert(Node z)
     {
-
+        // Generate a random priority, insert the node the same way as a BST
+        // Then, if the priority is not valid, perform rotations until the 
+        // treap is correctly ordered
     }
 
     // TODO
@@ -58,10 +69,24 @@ public class IntervalTreap
 
     }
     
-    // TODO
+    // TODO - Needs testing
+    /**
+     * Searches for the specified interval in the treap
+     * @param i the interval
+     * @return the node containing the interval, or null if not found
+     */
     public Node intervalSearch(Interval i)
     {
-        return null;
+        Node x = root;
+        while (x != null && !i.Overlap(x.interv))
+        {
+            if (x.left != null && x.left.imax >= i.low)
+            {
+                x = x.left;
+            }
+            else x = x.right;
+        }
+        return x;
     }
 
 
@@ -79,6 +104,7 @@ public class IntervalTreap
         return null;
     }
 
+    /*-------Helper Methods-------*/
     private void LeftRotate(Node z)
     {
         // perform a left rotate on the specified node

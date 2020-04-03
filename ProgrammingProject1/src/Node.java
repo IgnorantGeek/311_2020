@@ -1,3 +1,5 @@
+import java.util.Random;
+
 /** Treap Node Class
  * 
  * @author Nick Heisler and Tom Frye
@@ -21,8 +23,8 @@ public class Node
         parent = null;
         left = null;
         right = null;
-        // Need to generate a priority, not sure what
-        // method to use for generation yet
+        Random rand = new Random();
+        priority = rand.nextInt(1000);
     }
 
 
