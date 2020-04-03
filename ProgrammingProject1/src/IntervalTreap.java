@@ -15,15 +15,7 @@ public class IntervalTreap
     /*-----Constructors---------*/
     public IntervalTreap()
     {
-        // Initialize the root?
-        root = new Node();
-        size = 1;
-        height = 0;
-    }
-
-    public IntervalTreap(Interval i)
-    {
-        root = new Node(i);
+        root = null;
         size = 1;
         height = 0;
     }
@@ -58,9 +50,22 @@ public class IntervalTreap
     // TODO
     public void intervalInsert(Node z)
     {
-        // Generate a random priority, insert the node the same way as a BST
-        // Then, if the priority is not valid, perform rotations until the 
-        // treap is correctly ordered
+        // INSERT SECTION
+        Node y = null;
+        Node x = root;
+        while (x != null)
+        {
+            y = x;
+            if (z.interv.low < x.interv.low) x = x.left;
+            else x = x.right;
+        }
+        z.parent = y;
+        if (y == null) root = z;
+        else if (z.interv.low < y.interv.low) y.left = z;
+        else y.right = z;
+
+        // ROTATE SECTION
+        // TODO
     }
 
     // TODO
