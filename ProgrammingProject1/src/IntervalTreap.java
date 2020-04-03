@@ -47,7 +47,11 @@ public class IntervalTreap
     }
 
 
-    // TODO
+    // TODO - NEEDS TESTING
+    /**
+     * Insert a new node into the treap
+     * @param z The node to insert
+     */
     public void intervalInsert(Node z)
     {
         // INSERT SECTION
@@ -65,7 +69,13 @@ public class IntervalTreap
         else y.right = z;
 
         // ROTATE SECTION
-        // TODO
+        while (y!= null && z.priority < y.priority)
+        {
+            // rotate up
+            if (y.left == z) RightRotate(y);
+            else LeftRotate(y);
+            y = z.parent;
+        }
     }
 
     // TODO
@@ -74,7 +84,7 @@ public class IntervalTreap
 
     }
     
-    // TODO - Needs testing
+    // TODO - NEEDS TESTING
     /**
      * Searches for the specified interval in the treap
      * @param i the interval
@@ -112,11 +122,23 @@ public class IntervalTreap
     /*-------Helper Methods-------*/
     private void LeftRotate(Node z)
     {
-        // perform a left rotate on the specified node
+        if (z.right == null) return;
+        Node oldRight = z.right;
+        z.right = oldRight.left;
+        if (z.parent == null) root = oldRight;
+        else if (z.parent.left == z) z.parent.left = oldRight;
+        else z.parent.right = oldRight;
+        oldRight.left = z;
     }
 
     private void RightRotate(Node z)
     {
-        // perform a right rotate on the specified node
+        if (z.left == null) return;
+        Node oldLeft = z.left;
+        z.left = oldLeft.right;
+        if (z.parent == null) root = oldLeft;
+        else if (z.parent.left == z) z.parent.left = oldLeft;
+        else z.parent.right = oldLeft;
+        oldLeft.right = z;
     }
 }
