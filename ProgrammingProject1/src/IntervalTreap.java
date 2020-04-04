@@ -20,6 +20,8 @@ public class IntervalTreap
         height = 0;
     }
 
+    // TODO - Update imax in insert and delete
+
 
     /*----Class Methods----------*/
     /**
@@ -76,12 +78,50 @@ public class IntervalTreap
             else LeftRotate(y);
             y = z.parent;
         }
+
+        // Update size and height?
+        size++;
     }
 
-    // TODO
+    /**
+     * Delete the specified node from the treap
+     * @param z
+     */
     public void intervalDelete(Node z)
     {
+        // Case 1
+        if (z.left == null && z.right == null)
+        {
+            if (z.parent == null) root = null;
+            else if (z.parent.left == z) z.parent.left = null;
+            else z.parent.right = null;
+            size--;
+            // height
+        }
 
+        // Case 2
+        if (z.left != null && z.right == null)
+        {
+            if (z.parent == null) root = z.left;
+            else if (z.parent.left == z) z.parent.left = z.left;
+            else z.parent.right = z.left;
+            size--;
+            //height
+        }
+        if (z.right != null && z.left == null)
+        {
+            if (z.parent == null) root = z.right;
+            else if (z.parent.left == z) z.parent.left = z.right;
+            else z.parent.right = z.right;
+            size--;
+            //height
+        }
+
+        // Case 3
+        if (z.left != null && z.right != null)
+        {
+            // TODO
+        }
     }
     
     // TODO - NEEDS TESTING
