@@ -22,6 +22,8 @@ public class IntervalTreap
 
     // TODO - Update imax in insert and delete
 
+    // We can figure out which is the left/right child by looking at the key
+
 
     /*----Class Methods----------*/
     /**
@@ -160,25 +162,44 @@ public class IntervalTreap
     }
 
     /*-------Helper Methods-------*/
-    private void LeftRotate(Node z)
+    private void LeftRotate(Node x)
     {
-        if (z.right == null) return;
-        Node oldRight = z.right;
-        z.right = oldRight.left;
-        if (z.parent == null) root = oldRight;
-        else if (z.parent.left == z) z.parent.left = oldRight;
-        else z.parent.right = oldRight;
-        oldRight.left = z;
+        Node y = x.right;
+        x.right = y.left;
+        if (y.left != null) y.left.parent = x;
+        y.parent = x.parent;
+        if (x.parent == null) root = y;
+        else if (x == x.parent.left) x.parent.left = y;
+        else x.parent.right = y;
+        y.left = x;
+        x.parent = y;
     }
 
-    private void RightRotate(Node z)
+    private void RightRotate(Node x)
     {
-        if (z.left == null) return;
-        Node oldLeft = z.left;
-        z.left = oldLeft.right;
-        if (z.parent == null) root = oldLeft;
-        else if (z.parent.left == z) z.parent.left = oldLeft;
-        else z.parent.right = oldLeft;
-        oldLeft.right = z;
+        Node y = x.left;
+        x.left = y.right;
+        if (y.right != null) y.right.parent = x;
+        y.parent = x.parent;
+        if (x.parent == null) root = y;
+        else if (x == x.parent.right) x.parent.right = y;
+        else x.parent.left = y;
+        y.right = x;
+        x.parent = y;
+    }
+
+    public void inorder()
+    {
+         inorderRec(root);
+    }
+
+    private void inorderRec(Node n)
+    {
+        if (n != null)
+        {
+            inorderRec(n.left);
+            System.out.println("[" + n.interv.low + "," + n.interv.high + "] " + n.priority);
+            inorderRec(n.right);
+        }
     }
 }
