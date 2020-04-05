@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 /** Interval Treap Class
@@ -16,7 +17,7 @@ public class IntervalTreap
     public IntervalTreap()
     {
         root = null;
-        size = 1;
+        size = 0;
         height = 0;
     }
 
@@ -63,11 +64,22 @@ public class IntervalTreap
         // INSERT SECTION
         Node y = null;
         Node x = root;
+        // This doesn't seem like the best solution
+        ArrayList<Node> update = new ArrayList<Node>();
         while (x != null)
         {
             y = x;
+            // push the node to the update list
+            update.add(x);
             if (z.interv.low < x.interv.low) x = x.left;
             else x = x.right;
+        }
+        update.add(z);
+        // new
+        boolean newNode = false;
+        if (y != null && y.left == null && y.right == null)
+        {
+            newNode = true;
         }
         z.parent = y;
         if (y == null) root = z;
@@ -81,6 +93,24 @@ public class IntervalTreap
             if (y.left == z) RightRotate(y);
             else LeftRotate(y);
             y = z.parent;
+        }
+
+        if (newNode)
+        {
+            for (Node node : update)
+            {
+                // update the height of each node
+                if (node.left == null && node.right == null) /*do nothing*/;
+                else if (node.left != null && node.right == null)
+                {
+                    node.height = 1 + node.left.height;
+                }
+                else if (node.left == null && node.right != null)
+                {
+                    node.height = 1 + node.right.height;
+                }
+                else node.height = (node.left.height > node.right.height) ? 1 + node.left.height : 1 + node.right.height;
+            }
         }
 
         // Update size and height. This implies that the root has correct height
@@ -177,6 +207,9 @@ public class IntervalTreap
         else x.parent.right = y;
         y.left = x;
         x.parent = y;
+        int xheight = x.height;
+        x.height = y.height;
+        y.height = xheight;
     }
 
     private void RightRotate(Node x)
@@ -190,6 +223,9 @@ public class IntervalTreap
         else x.parent.left = y;
         y.right = x;
         x.parent = y;
+        int xheight = x.height;
+        x.height = y.height;
+        y.height = xheight;
     }
 
     public void inorder()
@@ -202,7 +238,7 @@ public class IntervalTreap
         if (n != null)
         {
             inorderRec(n.left);
-            System.out.println("[" + n.interv.low + "," + n.interv.high + "] " + n.priority);
+            n.printNode();
             inorderRec(n.right);
         }
     }

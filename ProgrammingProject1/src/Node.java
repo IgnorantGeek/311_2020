@@ -97,4 +97,14 @@ public class Node
     {
         return height;
     }
+
+    /**
+     * Print the formatted node
+     */
+    public void printNode()
+    {
+        System.out.println("[" + interv.low + "," + interv.high + "]");
+        System.out.println("priority: " + priority);
+        System.out.println("imax : " + imax + " | height : " + height);
+    }
 }
