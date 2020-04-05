@@ -24,6 +24,8 @@ public class IntervalTreap
 
     // We can figure out which is the left/right child by looking at the key
 
+    // The height can be updated in each rotation. Each node has a height
+
 
     /*----Class Methods----------*/
     /**
@@ -81,8 +83,10 @@ public class IntervalTreap
             y = z.parent;
         }
 
-        // Update size and height?
+        // Update size and height. This implies that the root has correct height
+        // Need to update height of each node in insert function.
         size++;
+        height = root.height;
     }
 
     /**
@@ -201,5 +205,29 @@ public class IntervalTreap
             System.out.println("[" + n.interv.low + "," + n.interv.high + "] " + n.priority);
             inorderRec(n.right);
         }
+    }
+
+    private Node Minimum(Node x)
+    {
+        while (x.left != null)
+        {
+            x=x.left;
+        }
+        return x;
+    }
+
+    private Node Successor(Node x)
+    {
+        if (x.right != null)
+        {
+            return Minimum(x.right);
+        }
+        Node y = x.parent;
+        while (y != null && x == y.right)
+        {
+            x=y;
+            y=y.parent;
+        }
+        return y;
     }
 }

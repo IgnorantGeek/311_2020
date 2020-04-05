@@ -13,6 +13,7 @@ public class Node
     public Node left;
     public Node right;
     public int imax;
+    public int height;
 
     /*-----Constructors---------*/
     public Node() { }
@@ -23,8 +24,20 @@ public class Node
         parent = null;
         left = null;
         right = null;
+        height = 0;
         Random rand = new Random();
         priority = rand.nextInt(1000);
+    }
+
+    // Manually set priority for testing
+    public Node(Interval i, int priority)
+    {
+        interv = i;
+        parent = null;
+        left = null;
+        right = null;
+        height = 0;
+        this.priority = priority;
     }
 
 
@@ -75,5 +88,13 @@ public class Node
     public Node getRight()
     {
         return right;
+    }
+
+    /**
+     * @return the height
+     */
+    public int getHeight()
+    {
+        return height;
     }
 }
