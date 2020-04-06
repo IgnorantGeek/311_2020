@@ -44,4 +44,10 @@ public class Interval
         if (this.low <= i.high && i.low <= this.high) return true;
         return false;
     }
+
+    public boolean isEqual(Interval i)
+    {
+        if (i.low == low && i.high == high) return true;
+        else return false;
+    }
 }

@@ -89,7 +89,7 @@ public class IntervalTreap
             y = z.parent;
         }
 
-        if (updateHeight)
+        if (true)
         {
             Node node = z;
             while (node != null)
@@ -99,19 +99,19 @@ public class IntervalTreap
                 else if (node.left != null && node.right == null)
                 {
                     node.height = 1 + node.left.height;
-                    node.imax = node.left.imax;
+                    node.imax = (node.imax > node.left.imax) ? node.imax : node.left.imax;
                 }
                 else if (node.left == null && node.right != null)
                 {
                     node.height = 1 + node.right.height;
-                    node.imax = node.right.imax;
+                    node.imax = (node.imax > node.right.imax) ? node.imax : node.right.imax;
                 }
-                else 
+                else
                 {
                     // get the max height and imax of the two child nodes
                     node.height = (node.left.height > node.right.height) ? 1 + node.left.height : 1 + node.right.height;
                     int submax = (node.left.imax > node.right.imax) ? node.left.imax : node.right.imax;
-                    node.imax = (submax > node.imax) ? submax : node.interv.high;
+                    node.imax = (submax > node.interv.high) ? submax : node.interv.high;
                 }
                 node = node.parent;
             }
@@ -183,15 +183,14 @@ public class IntervalTreap
             }
         }
 
-        // Fix the height
+        // Fix the height if necessary
         
     }
-    
-    // TODO - NEEDS TESTING
+
     /**
-     * Searches for the specified interval in the treap
+     * Searches for the interval that overlaps this interval in the treap
      * @param i the interval
-     * @return the node containing the interval, or null if not found
+     * @return the node containing the overlapping interval, or null if not found
      */
     public Node intervalSearch(Interval i)
     {
@@ -209,11 +208,23 @@ public class IntervalTreap
 
 
     // EXTRA CREDIT METHODS (NOT REQUIRED)
-
-    // TODO
+    /**
+     * Search for the node containing the interval
+     * @param i the interval to check
+     * @return  the node containing the overlapping interval, or null if not found
+     */
     public Node intervalSearchExactly(Interval i)
     {
-        return null;
+        Node x = root;
+        while (x != null && !i.isEqual(x.interv))
+        {
+            if (x.left != null && x.left.imax >= i.low)
+            {
+                x = x.left;
+            }
+            else x = x.right;
+        }
+        return x;
     }
 
     // TODO
