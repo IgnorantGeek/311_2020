@@ -70,10 +70,10 @@ public class IntervalTreap
             else x = x.right;
         }
         // new
-        boolean newNode = false;
+        boolean updateHeight = false;
         if (y != null && y.left == null && y.right == null)
         {
-            newNode = true;
+            updateHeight = true;
         }
         z.parent = y;
         if (y == null) root = z;
@@ -89,7 +89,7 @@ public class IntervalTreap
             y = z.parent;
         }
 
-        if (newNode)
+        if (updateHeight)
         {
             Node node = z;
             while (node != null)
@@ -158,11 +158,16 @@ public class IntervalTreap
         // TODO - UNTESTED
         if (z.left != null && z.right != null)
         {
+            // Replace z with its successor
+        
+            // Get the successor and copy it
             Node succ = Successor(z);
             Node hold = new Node();
             hold.left = succ.left;
             hold.right = succ.right;
             hold.parent = succ.parent;
+
+            // Swap z with successor
             if (z.parent.left == z) z.parent.left = succ;
             else z.parent.right = succ;
             succ.parent = z.parent;
@@ -170,6 +175,7 @@ public class IntervalTreap
             z.left = hold.left;
             z.right = hold.right;
 
+            // While z is not a leaf node, and its priority is bigger than its childrens' priorities
             while (z.left != null && z.right != null && (z.priority < z.left.priority && z.priority < z.right.priority))
             {
                 if (z.left.priority < z.priority) RightRotate(z);
