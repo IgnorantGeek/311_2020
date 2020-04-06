@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 
 /** Interval Treap Class
@@ -64,17 +63,12 @@ public class IntervalTreap
         // INSERT SECTION
         Node y = null;
         Node x = root;
-        // This doesn't seem like the best solution
-        ArrayList<Node> update = new ArrayList<Node>();
         while (x != null)
         {
             y = x;
-            // push the node to the update list
-            update.add(x);
             if (z.interv.low < x.interv.low) x = x.left;
             else x = x.right;
         }
-        update.add(z);
         // new
         boolean newNode = false;
         if (y != null && y.left == null && y.right == null)
@@ -97,19 +91,29 @@ public class IntervalTreap
 
         if (newNode)
         {
-            for (Node node : update)
+            Node node = z;
+            while (node != null)
             {
                 // update the height of each node
-                if (node.left == null && node.right == null) /*do nothing*/;
+                if (node.left == null && node.right == null) node.height = 0;
                 else if (node.left != null && node.right == null)
                 {
                     node.height = 1 + node.left.height;
+                    node.imax = node.left.imax;
                 }
                 else if (node.left == null && node.right != null)
                 {
                     node.height = 1 + node.right.height;
+                    node.imax = node.right.imax;
                 }
-                else node.height = (node.left.height > node.right.height) ? 1 + node.left.height : 1 + node.right.height;
+                else 
+                {
+                    // get the max height and imax of the two child nodes
+                    node.height = (node.left.height > node.right.height) ? 1 + node.left.height : 1 + node.right.height;
+                    int submax = (node.left.imax > node.right.imax) ? node.left.imax : node.right.imax;
+                    node.imax = (submax > node.imax) ? submax : node.interv.high;
+                }
+                node = node.parent;
             }
         }
 
@@ -132,7 +136,6 @@ public class IntervalTreap
             else if (z.parent.left == z) z.parent.left = null;
             else z.parent.right = null;
             size--;
-            // height
         }
 
         // Case 2
@@ -142,7 +145,6 @@ public class IntervalTreap
             else if (z.parent.left == z) z.parent.left = z.left;
             else z.parent.right = z.left;
             size--;
-            //height
         }
         if (z.right != null && z.left == null)
         {
@@ -150,7 +152,6 @@ public class IntervalTreap
             else if (z.parent.left == z) z.parent.left = z.right;
             else z.parent.right = z.right;
             size--;
-            //height
         }
 
         // Case 3
@@ -158,6 +159,9 @@ public class IntervalTreap
         {
             // TODO
         }
+
+        // Fix the height
+        
     }
     
     // TODO - NEEDS TESTING
@@ -230,7 +234,7 @@ public class IntervalTreap
 
     public void inorder()
     {
-         inorderRec(root);
+        inorderRec(root);
     }
 
     private void inorderRec(Node n)

@@ -25,6 +25,7 @@ public class Node
         left = null;
         right = null;
         height = 0;
+        imax = interv.high;
         Random rand = new Random();
         priority = rand.nextInt(1000);
     }
@@ -37,6 +38,7 @@ public class Node
         left = null;
         right = null;
         height = 0;
+        imax = interv.high;
         this.priority = priority;
     }
 
