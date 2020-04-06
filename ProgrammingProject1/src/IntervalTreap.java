@@ -176,6 +176,10 @@ public class IntervalTreap
             z.left = hold.left;
             z.right = hold.right;
 
+            // Remove reference from succ parent
+            if (z.parent.left == succ) z.parent.left = null;
+            else z.parent.right = null;
+
             // While z is not a leaf node, and its priority is bigger than its childrens' priorities
             while (z.left != null && z.right != null && (z.priority < z.left.priority && z.priority < z.right.priority))
             {
@@ -208,7 +212,29 @@ public class IntervalTreap
         {
             if (search.parent.imax == search.imax)
             {
-                // update parent imax with the max imax val from search subtree, and the parent's other child
+                if (search.left == null && search.right == null && search.parent.left == search && search.parent.right == null
+                  ||search.left == null && search.right == null && search.parent.right == search && search.parent.left == null)
+                {
+                    search.parent.imax = search.parent.interv.high;
+                }
+                else if (search.left == null && search.right == null && search.parent.left == search && search.parent.right != null)
+                {
+                    search.parent.imax = (search.parent.interv.high > search.parent.right.imax) ? search.parent.interv.high : search.parent.right.imax;
+                }
+                else if (search.left == null && search.right == null && search.parent.right == search && search.parent.left != null)
+                {
+                    search.parent.imax = (search.parent.interv.high > search.parent.left.imax) ? search.parent.interv.high : search.parent.left.imax;
+                }
+                else if (search.left != null && search.right == null && search.parent.right == search && search.parent.left != null)
+                {
+                    int hold_max = (search.parent.interv.high > search.parent.left.imax) ? search.parent.interv.high : search.parent.left.imax;
+                    search.parent.imax = (hold_max > search.left.imax) ? hold_max : search.left.imax;
+                }
+                else if (search.left == null && search.right != null && search.parent.right == search && search.parent.left != null)
+                {
+                    int hold_max = (search.parent.interv.high > search.parent.left.imax) ? search.parent.interv.high : search.parent.left.imax;
+                    search.parent.imax = (hold_max > search.right.imax) ? hold_max : search.right.imax;
+                }
             }
         }
     }
