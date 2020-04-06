@@ -70,10 +70,10 @@ public class IntervalTreap
             else x = x.right;
         }
         // new
-        boolean updateHeight = false;
-        if (y != null && y.left == null && y.right == null)
+        boolean update = false;
+        if (y != null)
         {
-            updateHeight = true;
+            update = true;
         }
         z.parent = y;
         if (y == null) root = z;
@@ -89,7 +89,7 @@ public class IntervalTreap
             y = z.parent;
         }
 
-        if (true)
+        if (update)
         {
             Node node = z;
             while (node != null)
@@ -166,6 +166,7 @@ public class IntervalTreap
             hold.left = succ.left;
             hold.right = succ.right;
             hold.parent = succ.parent;
+            succ.height = z.height;
 
             // Swap z with successor
             if (z.parent.left == z) z.parent.left = succ;
@@ -181,9 +182,26 @@ public class IntervalTreap
                 if (z.left.priority < z.priority) RightRotate(z);
                 else if (z.right.priority < z.priority) LeftRotate(z);
             }
+
+            Node search = z;
+            while (search != null)
+            {
+                // Node doesn't have siblings
+                if ((search.parent.left == search && search.parent.right == null) || (search.parent.right == search && search.parent.left == null))
+                {
+                    // decrement the parent height
+                    search.parent.height--;
+                }
+                // If the node does have siblings, and the parents height isn't 1 + the current height, decrement the parents height and keep going
+                else if (search.parent.height != 1+search.height)
+                {
+                    search.parent.height--;
+                }
+                search = search.parent;
+            }
         }
 
-        // Fix the height if necessary
+        
         
     }
 
