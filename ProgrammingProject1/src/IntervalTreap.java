@@ -202,6 +202,15 @@ public class IntervalTreap
             search = search.parent;
         }
         
+        // update the imax
+        search = z;
+        while (search != null)
+        {
+            if (search.parent.imax == search.imax)
+            {
+                // update parent imax with the max imax val from search subtree, and the parent's other child
+            }
+        }
     }
 
     /**
