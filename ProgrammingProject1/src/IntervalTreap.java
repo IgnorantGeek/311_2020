@@ -182,26 +182,25 @@ public class IntervalTreap
                 if (z.left.priority < z.priority) RightRotate(z);
                 else if (z.right.priority < z.priority) LeftRotate(z);
             }
-
-            Node search = z;
-            while (search != null)
-            {
-                // Node doesn't have siblings
-                if ((search.parent.left == search && search.parent.right == null) || (search.parent.right == search && search.parent.left == null))
-                {
-                    // decrement the parent height
-                    search.parent.height--;
-                }
-                // If the node does have siblings, and the parents height isn't 1 + the current height, decrement the parents height and keep going
-                else if (search.parent.height != 1+search.height)
-                {
-                    search.parent.height--;
-                }
-                search = search.parent;
-            }
         }
 
-        
+        // update the height
+        Node search = z;
+        while (search != null)
+        {
+            // Node doesn't have siblings
+            if ((search.parent.left == search && search.parent.right == null) || (search.parent.right == search && search.parent.left == null))
+            {
+                // decrement the parent height
+                search.parent.height--;
+            }
+            // If the node does have siblings, and the parents height isn't 1 + the current height, decrement the parents height and keep going
+            else if (search.parent.height != 1+search.height)
+            {
+                search.parent.height--;
+            }
+            search = search.parent;
+        }
         
     }
 
