@@ -155,9 +155,26 @@ public class IntervalTreap
         }
 
         // Case 3
+        // TODO - UNTESTED
         if (z.left != null && z.right != null)
         {
-            // TODO
+            Node succ = Successor(z);
+            Node hold = new Node();
+            hold.left = succ.left;
+            hold.right = succ.right;
+            hold.parent = succ.parent;
+            if (z.parent.left == z) z.parent.left = succ;
+            else z.parent.right = succ;
+            succ.parent = z.parent;
+            z.parent = hold.parent;
+            z.left = hold.left;
+            z.right = hold.right;
+
+            while (z.left != null && z.right != null && (z.priority < z.left.priority && z.priority < z.right.priority))
+            {
+                if (z.left.priority < z.priority) RightRotate(z);
+                else if (z.right.priority < z.priority) LeftRotate(z);
+            }
         }
 
         // Fix the height
