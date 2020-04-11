@@ -18,7 +18,7 @@ public class IntervalTreap
         size = 0;
     }
 
-    // TODO - Update imax in insert and delete
+    // TODO - Update imax in delete
 
     // We can figure out which is the left/right child by looking at the key
 
@@ -111,7 +111,6 @@ public class IntervalTreap
                 // If the node has two children, height is 1 + the max of the children's height
                 else
                 {
-                    // get the max height and imax of the two child nodes
                     node.height = (node.left.height > node.right.height) ? 1 + node.left.height : 1 + node.right.height;
                     int submax = (node.left.imax > node.right.imax) ? node.left.imax : node.right.imax;
                     node.imax = (submax > node.interv.high) ? submax : node.interv.high;
@@ -119,9 +118,6 @@ public class IntervalTreap
                 node = node.parent;
             }
         }
-
-        // Update size and height. This implies that the root has correct height
-        // Need to update height of each node in insert function.
         size++;
     }
 
