@@ -10,14 +10,12 @@ public class IntervalTreap
 
     // may not need to store these, leaving them for now
     public int size;
-    public int height;
     
     /*-----Constructors---------*/
     public IntervalTreap()
     {
         root = null;
         size = 0;
-        height = 0;
     }
 
     // TODO - Update imax in insert and delete
@@ -33,7 +31,8 @@ public class IntervalTreap
      */
     public int getHeight()
     {
-        return height;
+        if (root == null) return -1;
+        else return root.height;
     }
 
     /**
@@ -69,7 +68,6 @@ public class IntervalTreap
             if (z.interv.low < x.interv.low) x = x.left;
             else x = x.right;
         }
-        // new
         boolean update = false;
         if (y != null)
         {
@@ -89,13 +87,16 @@ public class IntervalTreap
             y = z.parent;
         }
 
+        // UPDATE HEIGHT/IMAX SECTION
         if (update)
         {
             Node node = z;
             while (node != null)
             {
-                // update the height of each node
+                // If the node has no children, height is zero
                 if (node.left == null && node.right == null) node.height = 0;
+
+                // If the node has one child, height is 1 + the height of that child
                 else if (node.left != null && node.right == null)
                 {
                     node.height = 1 + node.left.height;
@@ -106,6 +107,8 @@ public class IntervalTreap
                     node.height = 1 + node.right.height;
                     node.imax = (node.imax > node.right.imax) ? node.imax : node.right.imax;
                 }
+
+                // If the node has two children, height is 1 + the max of the children's height
                 else
                 {
                     // get the max height and imax of the two child nodes
@@ -120,7 +123,6 @@ public class IntervalTreap
         // Update size and height. This implies that the root has correct height
         // Need to update height of each node in insert function.
         size++;
-        height = root.height;
     }
 
     /**
