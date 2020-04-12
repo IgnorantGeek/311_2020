@@ -54,5 +54,10 @@ public class Test
         treap.inorder();
 
         System.out.println("\nRoot: [" + treap.root.interv.low + "," + treap.root.interv.high + "] " + "Height: " + treap.root.height + " iMax: " + treap.root.imax);
+
+        treap.intervalDelete(treap.root);
+
+
+        System.out.println("\nRoot: [" + treap.root.interv.low + "," + treap.root.interv.high + "] " + "Height: " + treap.root.height + " iMax: " + treap.root.imax);
     }
 }

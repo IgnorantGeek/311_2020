@@ -18,13 +18,6 @@ public class IntervalTreap
         size = 0;
     }
 
-    // TODO - Update imax in delete
-
-    // We can figure out which is the left/right child by looking at the key
-
-    // The height can be updated in each rotation. Each node has a height
-
-
     /*----Class Methods----------*/
     /**
      * @return the height
@@ -52,7 +45,6 @@ public class IntervalTreap
     }
 
 
-    // TODO - NEEDS TESTING
     /**
      * Insert a new node into the treap
      * @param z The node to insert
@@ -153,7 +145,6 @@ public class IntervalTreap
         }
 
         // Case 3
-        // TODO - UNTESTED
         if (z.left != null && z.right != null)
         {
             // Replace z with its successor
@@ -165,11 +156,12 @@ public class IntervalTreap
             hold.right = succ.right;
             hold.parent = succ.parent;
             succ.height = z.height;
+            succ.parent = z.parent;
 
             // Swap z with successor
-            if (z.parent.left == z) z.parent.left = succ;
+            if (z == root) root = succ;
+            else if (z.parent.left == z) z.parent.left = succ;
             else z.parent.right = succ;
-            succ.parent = z.parent;
             z.parent = hold.parent;
             z.left = hold.left;
             z.right = hold.right;
@@ -186,55 +178,37 @@ public class IntervalTreap
             }
         }
 
-        // update the height
-        Node search = z;
-        while (search != null)
+        // update the height and imax
+        Node node = z;
+        while (node != null)
         {
-            // Node doesn't have siblings
-            if ((search.parent.left == search && search.parent.right == null) || (search.parent.right == search && search.parent.left == null))
+            // If the node has no children, height is zero
+            if (node.left == null && node.right == null) node.height = 0;
+
+            // If the node has one child, height is 1 + the height of that child
+            else if (node.left != null && node.right == null)
             {
-                // decrement the parent height
-                search.parent.height--;
+                node.height = 1 + node.left.height;
+                node.imax = (node.imax > node.left.imax) ? node.imax : node.left.imax;
             }
-            // If the node does have siblings, and the parents height isn't 1 + the current height, decrement the parents height and keep going
-            else if (search.parent.height != 1+search.height)
+            else if (node.left == null && node.right != null)
             {
-                search.parent.height--;
+                node.height = 1 + node.right.height;
+                node.imax = (node.imax > node.right.imax) ? node.imax : node.right.imax;
             }
-            search = search.parent;
+
+            // If the node has two children, height is 1 + the max of the children's height
+            else
+            {
+                node.height = (node.left.height > node.right.height) ? 1 + node.left.height : 1 + node.right.height;
+                int submax = (node.left.imax > node.right.imax) ? node.left.imax : node.right.imax;
+                node.imax = (submax > node.interv.high) ? submax : node.interv.high;
+            }
+            node = node.parent;
         }
-        
-        // update the imax
-        search = z;
-        while (search != null)
-        {
-            if (search.parent.imax == search.imax)
-            {
-                if (search.left == null && search.right == null && search.parent.left == search && search.parent.right == null
-                  ||search.left == null && search.right == null && search.parent.right == search && search.parent.left == null)
-                {
-                    search.parent.imax = search.parent.interv.high;
-                }
-                else if (search.left == null && search.right == null && search.parent.left == search && search.parent.right != null)
-                {
-                    search.parent.imax = (search.parent.interv.high > search.parent.right.imax) ? search.parent.interv.high : search.parent.right.imax;
-                }
-                else if (search.left == null && search.right == null && search.parent.right == search && search.parent.left != null)
-                {
-                    search.parent.imax = (search.parent.interv.high > search.parent.left.imax) ? search.parent.interv.high : search.parent.left.imax;
-                }
-                else if (search.left != null && search.right == null && search.parent.right == search && search.parent.left != null)
-                {
-                    int hold_max = (search.parent.interv.high > search.parent.left.imax) ? search.parent.interv.high : search.parent.left.imax;
-                    search.parent.imax = (hold_max > search.left.imax) ? hold_max : search.left.imax;
-                }
-                else if (search.left == null && search.right != null && search.parent.right == search && search.parent.left != null)
-                {
-                    int hold_max = (search.parent.interv.high > search.parent.left.imax) ? search.parent.interv.high : search.parent.left.imax;
-                    search.parent.imax = (hold_max > search.right.imax) ? hold_max : search.right.imax;
-                }
-            }
-        }
+
+        // Set the deleted node to null, let garbage collector remove it
+        z = null;
     }
 
     /**
@@ -261,7 +235,7 @@ public class IntervalTreap
     /**
      * Search for the node containing the interval
      * @param i the interval to check
-     * @return  the node containing the overlapping interval, or null if not found
+     * @return  the node containing the interval, or null if not found
      */
     public Node intervalSearchExactly(Interval i)
     {
@@ -277,7 +251,11 @@ public class IntervalTreap
         return x;
     }
 
-    // TODO
+    /**
+     * NOT DONE
+     * @param i
+     * @return
+     */
     public List<Interval> overlappingIntervals(Interval i)
     {
         return null;
