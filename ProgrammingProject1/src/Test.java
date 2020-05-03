@@ -29,27 +29,34 @@ public class Test
         File f = new File("small_1.txt");
 		String line;
 		String [] split;
-		try {
+        try
+        {
 			Scanner sc = new Scanner(f);
 			sc.nextLine(); //skip first line "TP"
-			while (sc.hasNextLine()) {
+            while (sc.hasNextLine())
+            {
 				line = sc.nextLine();
 				if (line.equals("TN")) break;
 				split = line.split(" ");
 			}
-			while (sc.hasNextLine()) {
+            while (sc.hasNextLine())
+            {
 				line = sc.nextLine();
 				if (line.equals("Intervals")) break;
 				split = line.split(" ");
 			}
-			while(sc.hasNextLine()) {
+            while(sc.hasNextLine())
+            {
 				line = sc.nextLine();
 				split = line.split(" ");
 				treap.intervalInsert(new Node(new Interval(Integer.parseInt(split[0]),Integer.parseInt(split[1]))));
             }
             
             sc.close();
-		} catch (FileNotFoundException e) {
+        }
+        catch (FileNotFoundException e)
+        {
+
 		}
         treap.inorder();
 
