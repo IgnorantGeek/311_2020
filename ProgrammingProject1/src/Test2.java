@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Test2
@@ -7,7 +8,9 @@ public class Test2
     public static void main(String[] args)
     {
         IntervalTreap treap = new IntervalTreap();
-        
+        ArrayList<Interval> TP = new ArrayList<Interval>();
+        ArrayList<Interval> TN = new ArrayList<Interval>();
+
         File f = new File("small_1.txt");
 		String line;
 		String [] split;
@@ -19,13 +22,15 @@ public class Test2
             {
 				line = sc.nextLine();
 				if (line.equals("TN")) break;
-				split = line.split(" ");
+                split = line.split(" ");
+                TP.add(new Interval(Integer.parseInt(split[0]),Integer.parseInt(split[1])));
 			}
             while (sc.hasNextLine())
             {
 				line = sc.nextLine();
 				if (line.equals("Intervals")) break;
-				split = line.split(" ");
+                split = line.split(" ");
+                TN.add(new Interval(Integer.parseInt(split[0]),Integer.parseInt(split[1])));
 			}
             while(sc.hasNextLine())
             {
