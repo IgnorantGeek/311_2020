@@ -26,25 +26,12 @@ public class Test
         // treap.intervalInsert(n4);
         // treap.intervalInsert(n5);
 
-        File f = new File("small_1.txt");
+        File f = new File("treap_int.txt");
 		String line;
 		String [] split;
         try
         {
 			Scanner sc = new Scanner(f);
-			sc.nextLine(); //skip first line "TP"
-            while (sc.hasNextLine())
-            {
-				line = sc.nextLine();
-				if (line.equals("TN")) break;
-				split = line.split(" ");
-			}
-            while (sc.hasNextLine())
-            {
-				line = sc.nextLine();
-				if (line.equals("Intervals")) break;
-				split = line.split(" ");
-			}
             while(sc.hasNextLine())
             {
 				line = sc.nextLine();
