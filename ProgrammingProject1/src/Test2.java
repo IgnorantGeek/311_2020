@@ -45,9 +45,21 @@ public class Test2
         {
 
 		}
-        treap.inorder();
+        // treap.inorder();
 
-        System.out.println("\nRoot Node:");
-        treap.root.printNode();    
+        // System.out.println("\nRoot Node:");
+        // treap.root.printNode();
+
+        System.out.println("Test section");
+
+        for (Interval i : TP)
+        {
+            Node n = treap.intervalSearch(i);
+            
+            if (n == null)
+            {
+                System.out.println("Null node. Could not find interval [" + i.low + " " + i.high + "]");
+            }
+        }
     }    
 }
