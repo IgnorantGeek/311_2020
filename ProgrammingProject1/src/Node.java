@@ -27,7 +27,7 @@ public class Node
         height = 0;
         imax = interv.high;
         Random rand = new Random();
-        priority = rand.nextInt(1000);
+        priority = rand.nextInt(100000);
     }
 
     // Manually set priority for testing

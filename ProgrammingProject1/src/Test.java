@@ -40,22 +40,62 @@ public class Test
             }
             
             sc.close();
+
+            checkPriority(treap.root);
+
+            int height = treap.getHeight();
+            int height_calc = testHeightRecursive(treap.root, 0);
+
+            if (height != height_calc)
+            {
+                System.out.println("Houston we have a problem");
+                System.out.println("Height value: " + height);
+                System.out.println("Calculated Height: " + height_calc);
+            }
         }
         catch (FileNotFoundException e)
         {
 
-		}
-        treap.inorder();
-
-        System.out.println("\nRoot Node:");
-        treap.root.printNode();
-
-        System.out.println("\nTest Section - Find [876 966]\n");
+        }
         
-        Interval in = new Interval(876, 966);
-        Node n = treap.intervalSearch(in);
 
-        System.out.println("Node found:");
-        n.printNode();
     }
+
+    public static void checkPriority(Node n)
+    {
+        if (n.left == null && n.right == null) return;
+        else if (n.left != null && n.right == null)
+        {
+            if (n.priority > n.left.priority)
+            {
+                System.out.println("Priority mismatch.");
+            }
+            checkPriority(n.left);
+        }
+        else if (n.left == null && n.right != null)
+        {
+            if (n.priority > n.right.priority)
+            {
+                System.out.println("Priority mismatch.");
+            }
+            checkPriority(n.right);
+        }
+        else
+        {
+            if (n.priority > n.left.priority || n.priority > n.right.priority)
+            {
+                System.out.println("Priority mismatch.");
+            }
+            checkPriority(n.left);
+            checkPriority(n.right);
+        }
+    }
+
+    public static int testHeightRecursive(Node n, int currentHeight)
+    {
+		int h = currentHeight;
+		if(n.left!=null) h = testHeightRecursive(n.left, currentHeight+1);
+		if(n.right!=null) h = Math.max(h, testHeightRecursive(n.right, currentHeight+1));
+		return h;
+	}
 }
