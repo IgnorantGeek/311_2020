@@ -112,20 +112,20 @@ public class Node
 
     public void updateImax()
     {
-        // If the node has no children, height is zero
+        // If the node has no children, imax is interv.high
         if (this.left == null && this.right == null) this.imax = this.interv.high;
 
-        // If the node has one child, height is 1 + the height of that child
+        // If the node has one child
         else if (this.left != null && this.right == null)
         {
-            this.imax = (this.imax > this.left.imax) ? this.imax : this.left.imax;
+            this.imax = (this.interv.high > this.left.imax) ? this.interv.high : this.left.imax;
         }
         else if (this.left == null && this.right != null)
         {
-            this.imax = (this.imax > this.right.imax) ? this.imax : this.right.imax;
+            this.imax = (this.interv.high > this.right.imax) ? this.interv.high : this.right.imax;
         }
 
-        // If the node has two children, height is 1 + the max of the children's height
+        // If node has 2 children
         else
         {
             int submax = (this.left.imax > this.right.imax) ? this.left.imax : this.right.imax;
