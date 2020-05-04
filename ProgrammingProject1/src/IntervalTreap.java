@@ -276,6 +276,10 @@ public class IntervalTreap
         int xheight = x.height;
         x.height = y.height;
         y.height = xheight;
+
+        // Update the imax of x and y
+        x.updateImax();
+        y.updateImax();
     }
 
     private void RightRotate(Node x)
@@ -292,6 +296,10 @@ public class IntervalTreap
         int xheight = x.height;
         x.height = y.height;
         y.height = xheight;
+
+        // Update the imax of x and y
+        x.updateImax();
+        y.updateImax();
     }
 
     public void inorder()

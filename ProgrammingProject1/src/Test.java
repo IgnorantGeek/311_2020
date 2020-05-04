@@ -49,5 +49,13 @@ public class Test
 
         System.out.println("\nRoot Node:");
         treap.root.printNode();
+
+        System.out.println("\nTest Section - Find [876 966]\n");
+        
+        Interval in = new Interval(876, 966);
+        Node n = treap.intervalSearch(in);
+
+        System.out.println("Node found:");
+        n.printNode();
     }
 }

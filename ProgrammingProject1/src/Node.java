@@ -109,4 +109,27 @@ public class Node
         System.out.println("priority: " + priority);
         System.out.println("imax : " + imax + " | height : " + height);
     }
+
+    public void updateImax()
+    {
+        // If the node has no children, imax is interv.high
+        if (this.left == null && this.right == null) this.imax = this.interv.high;
+
+        // If the node has one child
+        else if (this.left != null && this.right == null)
+        {
+            this.imax = (this.interv.high > this.left.imax) ? this.interv.high : this.left.imax;
+        }
+        else if (this.left == null && this.right != null)
+        {
+            this.imax = (this.interv.high > this.right.imax) ? this.interv.high : this.right.imax;
+        }
+
+        // If node has 2 children
+        else
+        {
+            int submax = (this.left.imax > this.right.imax) ? this.left.imax : this.right.imax;
+            this.imax = (submax > this.interv.high) ? submax : this.interv.high;
+        }
+    }
 }
