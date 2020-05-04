@@ -3,7 +3,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Test2
+public class Iterator
 {
     public static void main(String[] args)
     {
@@ -44,30 +44,10 @@ public class Test2
         catch (FileNotFoundException e)
         {
 
-		}
-
-        System.out.println("Test the search function. If we see no other output, the test has passed.");
-
-        for (Interval i : TP)
-        {
-            Node n = treap.intervalSearch(i);
-            
-            if (n == null)
-            {
-                System.out.println("Null node. Could not find interval [" + i.low + " " + i.high + "]");
-            }
         }
-
-        for (Interval i : TN)
-        {
-            Node n = treap.intervalSearch(i);
-
-            if (n != null)
-            {
-                System.out.println("Match found. Interval [" + i.low + " " + i.high + "]");
-            }
-        }
-
-        treap.intervalDelete(treap.root);
+        
+        TreapIterator iter = new TreapIterator(treap);
+        System.out.println("Iterator started. Enter a command.");
+        iter.start();
     }    
 }

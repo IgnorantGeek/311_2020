@@ -171,7 +171,7 @@ public class IntervalTreap
             else z.parent.right = null;
 
             // While z is not a leaf node, and its priority is bigger than its childrens' priorities
-            while (z.left != null && z.right != null && (z.priority < z.left.priority && z.priority < z.right.priority))
+            while (z.left != null && z.right != null && (z.priority > z.left.priority || z.priority > z.right.priority))
             {
                 if (z.left.priority < z.priority) RightRotate(z);
                 else if (z.right.priority < z.priority) LeftRotate(z);
@@ -183,18 +183,24 @@ public class IntervalTreap
         while (node != null)
         {
             // If the node has no children, height is zero
-            if (node.left == null && node.right == null) node.height = 0;
+            if (node.left == null && node.right == null) 
+            {
+                node.height = 0;
+                System.out.println("leaf node");
+            }
 
             // If the node has one child, height is 1 + the height of that child
             else if (node.left != null && node.right == null)
             {
                 node.height = 1 + node.left.height;
                 node.imax = (node.imax > node.left.imax) ? node.imax : node.left.imax;
+                System.out.println("left child");
             }
             else if (node.left == null && node.right != null)
             {
                 node.height = 1 + node.right.height;
                 node.imax = (node.imax > node.right.imax) ? node.imax : node.right.imax;
+                System.out.println("right child");
             }
 
             // If the node has two children, height is 1 + the max of the children's height
@@ -203,6 +209,7 @@ public class IntervalTreap
                 node.height = (node.left.height > node.right.height) ? 1 + node.left.height : 1 + node.right.height;
                 int submax = (node.left.imax > node.right.imax) ? node.left.imax : node.right.imax;
                 node.imax = (submax > node.interv.high) ? submax : node.interv.high;
+                System.out.println("two children");
             }
             node = node.parent;
         }
