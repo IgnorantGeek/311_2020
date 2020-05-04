@@ -206,7 +206,6 @@ public class IntervalTreap
             if (node.left == null && node.right == null) 
             {
                 node.height = 0;
-                System.out.println("leaf node");
             }
 
             // If the node has one child, height is 1 + the height of that child
@@ -214,13 +213,11 @@ public class IntervalTreap
             {
                 node.height = 1 + node.left.height;
                 node.imax = (node.imax > node.left.imax) ? node.imax : node.left.imax;
-                System.out.println("left child");
             }
             else if (node.left == null && node.right != null)
             {
                 node.height = 1 + node.right.height;
                 node.imax = (node.imax > node.right.imax) ? node.imax : node.right.imax;
-                System.out.println("right child");
             }
 
             // If the node has two children, height is 1 + the max of the children's height
@@ -229,9 +226,7 @@ public class IntervalTreap
                 node.height = (node.left.height > node.right.height) ? 1 + node.left.height : 1 + node.right.height;
                 int submax = (node.left.imax > node.right.imax) ? node.left.imax : node.right.imax;
                 node.imax = (submax > node.interv.high) ? submax : node.interv.high;
-                System.out.println("two children");
             }
-            node.printNode();
             node = node.parent;
         }
 
