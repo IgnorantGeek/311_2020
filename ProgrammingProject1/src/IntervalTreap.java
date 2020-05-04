@@ -140,7 +140,7 @@ public class IntervalTreap
             else
             {
                 z.parent.right = z.left;
-                z.right.parent = z.parent;
+                z.left.parent = z.parent;
             }
             size--;
         }
@@ -149,32 +149,38 @@ public class IntervalTreap
             if (z.parent == null) root = z.right;
             else if (z.parent.left == z)
             {
-                z.parent.left = z.left;
-                z.left.parent = z.parent;
+                z.parent.left = z.right;
+                z.right.parent = z.parent;
             }
             else
             {
-                z.parent.right = z.left;
+                z.parent.right = z.right;
                 z.right.parent = z.parent;
             }
             size--;
         }
 
         // Case 3
-        Node succ = Successor(z);
         if (z.left != null && z.right != null)
         {
             // Replace z with its successor
-        
+        	
             // Get the successor and copy it
+        	Node succ = Successor(z);
             Node hold = new Node();
             hold.left = succ.left;
             hold.right = succ.right;
             hold.parent = succ.parent;
+            if(succ.left != null) succ.left.parent = hold;
+            if(succ.right != null) succ.right.parent = hold;
+            
             succ.height = z.height;
             succ.parent = z.parent;
-            if (z.left != null) z.left.parent = succ;
-            if (z.right != null) z.right.parent = succ;
+            succ.left = z.left;
+            succ.right = z.right;
+            z.left.parent = succ;
+            z.right.parent = succ;
+            
 
             // Swap z with successor
             if (z == root) root = succ;
@@ -183,6 +189,10 @@ public class IntervalTreap
             z.parent = hold.parent;
             z.left = hold.left;
             z.right = hold.right;
+            if(hold.left != null) hold.left.parent = z;
+            if(hold.right != null) hold.right.parent = z;
+            if(hold.parent.left == hold) hold.parent.left = z;
+            else hold.parent.right = z;
 
             // Remove reference from succ parent
             if (z.parent.left == succ) z.parent.left = null;
@@ -191,10 +201,9 @@ public class IntervalTreap
             // While z is not a leaf node, and its priority is bigger than its childrens' priorities
             while (z.left != null && z.right != null && (z.priority > z.left.priority || z.priority > z.right.priority))
             {
-                if (z.left.priority < z.priority) RightRotate(z);
-                else if (z.right.priority < z.priority) LeftRotate(z);
+                if (z.left.priority < z.right.priority) RightRotate(z);
+                else LeftRotate(z);
             }
-
             size--;
         }
 
@@ -206,6 +215,7 @@ public class IntervalTreap
             if (node.left == null && node.right == null) 
             {
                 node.height = 0;
+                //node.imax = node.interv.high;
             }
 
             // If the node has one child, height is 1 + the height of that child
@@ -232,6 +242,7 @@ public class IntervalTreap
 
         // Set the deleted node to null, let garbage collector remove it
         z = null;
+        //size--;
     }
 
     /**

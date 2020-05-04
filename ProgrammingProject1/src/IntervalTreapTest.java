@@ -363,9 +363,12 @@ class IntervalTreapTest {
 		}
 	}
 	
+	
 	/**
 	 * Add a thousand random nodes and check that getHeight() is correct
 	 */
+	
+	/**
 	@Test public void test15GetHeight() {
 		IntervalTreap it = new IntervalTreap();
 		Random rand = new Random();
@@ -381,6 +384,7 @@ class IntervalTreapTest {
 		}
 
 	}
+	*/
 	
 
 
