@@ -59,7 +59,7 @@ public class TestIntervalTreap {
 	public void testSmall() {
 		scanConstruct("C:/Users/Tom/eclipse-workspace/311_2020/ProgrammingProject1/src/small_1.txt");
 		for (Interval i : TP) {
-			//assertNotNull(it1.intervalSearch(i));
+			assertNotNull(it1.intervalSearch(i));
 		}
 		for (Interval j : TN) {
 			assertNull(it1.intervalSearch(j));
@@ -68,11 +68,10 @@ public class TestIntervalTreap {
 		it1.inorder();
 	}
 	
-	/*
 
 	@Test
 	public void testMedium() {
-		scanConstruct("src/medium_1.txt");
+		scanConstruct("C:/Users/Tom/eclipse-workspace/311_2020/ProgrammingProject1/src/medium_1.txt");
 		for (Interval i : TP) {
 			assertNotNull(it1.intervalSearch(i));
 		}
@@ -84,7 +83,7 @@ public class TestIntervalTreap {
 
 	@Test
 	public void testLarge() {
-		scanConstruct("src/large_1.txt");
+		scanConstruct("C:/Users/Tom/eclipse-workspace/311_2020/ProgrammingProject1/src/large_1.txt");
 		for (Interval i : TP) {
 			assertNotNull(it1.intervalSearch(i));
 		}
@@ -94,7 +93,6 @@ public class TestIntervalTreap {
 		testTreapStructure(it1);
 	}
 	
-	*/
 	
 	private void testTreapStructure(IntervalTreap it0) {
 		//Do an InOrder Traversal and append the nodes into an array
