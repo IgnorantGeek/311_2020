@@ -132,31 +132,49 @@ public class IntervalTreap
         if (z.left != null && z.right == null)
         {
             if (z.parent == null) root = z.left;
-            else if (z.parent.left == z) z.parent.left = z.left;
-            else z.parent.right = z.left;
+            else if (z.parent.left == z)
+            {
+                z.parent.left = z.left;
+                z.left.parent = z.parent;
+            }
+            else
+            {
+                z.parent.right = z.left;
+                z.right.parent = z.parent;
+            }
             size--;
         }
         if (z.right != null && z.left == null)
         {
             if (z.parent == null) root = z.right;
-            else if (z.parent.left == z) z.parent.left = z.right;
-            else z.parent.right = z.right;
+            else if (z.parent.left == z)
+            {
+                z.parent.left = z.left;
+                z.left.parent = z.parent;
+            }
+            else
+            {
+                z.parent.right = z.left;
+                z.right.parent = z.parent;
+            }
             size--;
         }
 
         // Case 3
+        Node succ = Successor(z);
         if (z.left != null && z.right != null)
         {
             // Replace z with its successor
         
             // Get the successor and copy it
-            Node succ = Successor(z);
             Node hold = new Node();
             hold.left = succ.left;
             hold.right = succ.right;
             hold.parent = succ.parent;
             succ.height = z.height;
             succ.parent = z.parent;
+            if (z.left != null) z.left.parent = succ;
+            if (z.right != null) z.right.parent = succ;
 
             // Swap z with successor
             if (z == root) root = succ;
@@ -176,6 +194,8 @@ public class IntervalTreap
                 if (z.left.priority < z.priority) RightRotate(z);
                 else if (z.right.priority < z.priority) LeftRotate(z);
             }
+
+            size--;
         }
 
         // update the height and imax
@@ -211,6 +231,7 @@ public class IntervalTreap
                 node.imax = (submax > node.interv.high) ? submax : node.interv.high;
                 System.out.println("two children");
             }
+            node.printNode();
             node = node.parent;
         }
 
